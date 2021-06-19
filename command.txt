@@ -1,0 +1,35 @@
+1. npx sequelize init
+2. setting config.json.
+3. membuat model dan migration
+npx sequelize-cli model:generate --name User --attributes firstName:string,lastName:string,email:string
+
+*note :
+=========================================================================================
+untuk membuat relasi, lihat dahulu posisi file yang ingin di migration.
+contoh ada file 
+20210614205853-create-user.js
+20210614215853-create-role.js
+
+isi dari 20210614205853-create-user.js, 
+roleId: {
+  type: Sequelize.INTEGER,
+  onDelete: 'CASCADE',
+  references: {
+    model: 'roles',
+    key: 'id',
+    // as : 'jobId'
+  },
+},
+
+jika kita jalankan npx sequelize db:migrate, maka akan error.
+
+untuk itu kita harus ubah nama file create-role agar berada diposisi atas user, misal
+20210614195853-create-role.js.
+=========================================================================================
+
+4. npx sequelize db:migrate
+5. npx sequelize db:migrate:undo:all
+
+6. npx sequelize-cli seed:generate --name user ---> create seed
+7. npx sequelize db:seed:all
+8. npx sequelize db:seed --seed my_seeder_file.js ---> seed spesific

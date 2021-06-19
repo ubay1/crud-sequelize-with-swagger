@@ -1,0 +1,156 @@
+swagger: "2.0"
+info:
+  version: "0.0.1"
+  title: Kantorku RestAPI
+# during dev, should point to your local machine
+host: localhost:8000
+# basePath prefixes all resource paths 
+basePath: /api
+# 
+schemes:
+  - http
+  - https
+# format of bodies a client can send (Content-Type)
+consumes:
+  - application/json
+# format of the responses to the client (Accepts)
+produces:
+  - application/json
+paths:
+  /role:
+    x-swagger-router-controller: role
+    post:
+      summary: 'Add new role'
+      operationId: createRole
+      tags: 
+        - Role
+      parameters:
+        - in: body
+          name: Request Body
+          # description: Attributes of new document
+          required: true
+          schema:
+            $ref: "#/definitions/Role"
+      responses:
+        "201":
+          description: Successfully created
+          schema:
+            $ref: "#/definitions/Role"
+        default:
+          $ref: "#/responses/ErrorResponse"
+    get:
+      summary: 'Get all role'
+      operationId: readAll
+      tags: 
+        - Role
+      responses:
+        "200":
+          description: Success
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/Role"
+        default:
+          $ref: "#/responses/ErrorResponse"
+  
+  /role/{id}:
+    x-swagger-router-controller: role
+    get:
+      summary: 'Get role by ID'
+      operationId: readById
+      tags: 
+        - Role
+      parameters: 
+        - in: path
+          name: id
+          description: role ID
+          type: number
+          required: true
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/Role"
+        default:
+          $ref: "#/responses/ErrorResponse"
+    delete:
+      summary: 'Delete role by ID'
+      operationId: deleteById
+      tags: 
+        - Role
+      parameters:
+        - in: path
+          name: id
+          description: role ID
+          type: number
+          required: true
+      responses:
+        "200":
+          $ref: "#/responses/Response"
+        default:
+          $ref: "#/responses/ErrorResponse"
+    put:
+      summary: 'Update role by ID'
+      operationId: updateById
+      tags: 
+        - Role
+      parameters:
+        - in: path
+          name: id
+          description: role ID
+          type: number
+          required: true
+        - in: body
+          name: Role
+          description: New properties of existing document or properties of new document
+          required: true
+          schema:
+            $ref: "#/definitions/Role"
+      responses:
+        "200":
+          description: Successfully updated
+          schema:
+            $ref: "#/definitions/Role"
+        "201":
+          description: Successfully created
+          schema:
+            $ref: "#/definitions/Role"
+        default:
+          $ref: "#/responses/ErrorResponse"
+  
+  /swagger:
+    x-swagger-pipe: swagger_raw
+
+# complex objects have schema definitions
+definitions:
+  # Model definition for role
+  Role:
+    properties:
+      # The Sequelize-ORM will add id, createdAt and updatedAt
+      role_name:
+        type: string
+        description: role name value
+      text_role_name:
+        type: string
+        description: role name value
+    required:
+      - role_name
+      - text_role_name
+responses:
+  Response:
+    description: Success
+    schema:
+      type: object
+      properties:
+        message:
+          type: string
+      required:
+        - message
+  ErrorResponse:
+    description: Error
+    schema:
+      properties:
+        message:
+          type: string
+      required:
+        - message
