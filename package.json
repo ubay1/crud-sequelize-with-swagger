@@ -38,7 +38,6 @@
     "sequelize-cli": "^6.2.0",
     "sequelize-date-no-tz-postgres": "^1.0.0",
     "socket.io": "^3.1.1",
-    "sqlite3": "^5.0.2",
     "swagger-express-mw": "^0.7.0",
     "swagger-sequelize": "^0.1.5",
     "swagger-ui-express": "^4.1.6"

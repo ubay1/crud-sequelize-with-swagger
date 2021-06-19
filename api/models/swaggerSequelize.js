@@ -6,11 +6,7 @@ const fs        = require('fs');
 const jsyaml    = require('js-yaml');
 const path      = require("path");
 
-// For Sequelize with SQLite:
 const sequelizeOptions = {
-  // dialect: 'sqlite', 
-  // storage: './db.sqlite', 
-  // operatorsAliases: 0
   username: "postgres",
   password: "buaran123",
   database: "kantorku",
